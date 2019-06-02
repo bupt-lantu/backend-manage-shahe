@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>{{data.Id ? "修改数据": "添加数据"}}</h1>
+<div mat-dialog-content>
+  <mat-form-field class="full-width">
+    <input matInput type="text" [(ngModel)]="data.Type" placeholder="Type" />
+  </mat-form-field>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="onNoClick()">取消</button>
+  <button mat-button *ngIf="data.Id" (click)="onEditClick(data)">修改</button>
+  <button mat-button *ngIf="data.Id" (click)="onDeleteClick(data)">删除</button>
+  <button mat-button *ngIf="!data.Id" (click)="onAddClick(data)">添加</button>
+</div>

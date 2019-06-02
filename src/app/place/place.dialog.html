@@ -1,0 +1,45 @@
+<h1 mat-dialog-title>{{data.Id ? "修改数据": "添加数据"}}</h1>
+<div mat-dialog-content>
+  <mat-form-field class="full-width">
+    <input matInput type="text" [(ngModel)]="data.Title" placeholder="Title" />
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <textarea matInput [(ngModel)]="data.Desc" placeholder="Desc" ></textarea>
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <input matInput [(ngModel)]="data.Picture" placeholder="Picture" />
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <input matInput [(ngModel)]="data.Video" placeholder="Video" />
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-select [(ngModel)]="data.PlaceType.Id" placeholder="PlaceType">
+      <mat-option *ngFor="let placetype of placeTypes" [value]="placetype.Id">
+        {{placetype.Type}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+ <mat-form-field class="full-width">
+    <input
+      matInput
+      [(ngModel)]="data.Latitude"
+      placeholder="Latitude"
+      (keyup)="changePosition($event.target.value,data.Longitude)"
+    />
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <input
+      matInput
+      [(ngModel)]="data.Longitude"
+      placeholder="Longitude"
+      (keyup)="changePosition(data.Latitude,$event.target.value)"
+    />
+  </mat-form-field>
+  <div id="container" style="width:400px; height:300px"></div>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="onNoClick()">取消</button>
+  <button mat-button *ngIf="data.Id" (click)="onEditClick(data)">修改</button>
+  <button mat-button *ngIf="data.Id" (click)="onDeleteClick(data)">删除</button>
+  <button mat-button *ngIf="!data.Id" (click)="onAddClick(data)">添加</button>
+</div>
