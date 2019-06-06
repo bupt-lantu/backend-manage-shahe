@@ -8,4 +8,7 @@ export class Place {
   Longitude: number;
   Latitude: number;
   PlaceType: PlaceType;
+  constructor() {
+    this.PlaceType = new PlaceType();
+  }
 }

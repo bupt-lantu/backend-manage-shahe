@@ -1,6 +1,10 @@
 import { Component, OnInit, AfterViewInit, Inject } from "@angular/core";
 import { MatTableDataSource } from "@angular/material/table";
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA
+} from "@angular/material/dialog";
 import { PlaceService } from "./place.service";
 import { PlaceTypeService } from "../placetype/placetype.service";
 import { PlaceType } from "../placetype/placetype";
@@ -80,7 +84,7 @@ export class PlaceComponent implements OnInit {
   templateUrl: "place.dialog.html",
   styleUrls: ["./place.dialog.sass"]
 })
-export class PlaceDialogComponent implements AfterViewInit {
+export class PlaceDialogComponent implements AfterViewInit, OnInit {
   constructor(
     private placeService: PlaceService,
     private placetypeService: PlaceTypeService,
@@ -99,13 +103,16 @@ export class PlaceDialogComponent implements AfterViewInit {
   info: any;
   map: any;
 
-  placeTypes: PlaceType[] = [];
-  ngAfterViewInit() {
-    const that = this;
+  ngOnInit() {
     this.placetypeService.getPlaceTypes().subscribe(result => {
       this.placeTypes = result;
       console.log(this.placeTypes);
     });
+  }
+
+  placeTypes: PlaceType[] = [];
+  ngAfterViewInit() {
+    const that = this;
     this.map = new window.qq.maps.Map(document.getElementById("container"), {
       // 地图的中心地理坐标。
       center: new window.qq.maps.LatLng(
