@@ -3,8 +3,7 @@ import { Observable, of } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { Place } from "./place";
 import { HttpClient } from "@angular/common/http";
-
-const baseURI = "http://139.199.26.178:8000/v1/";
+import { environment } from "./../../environments/environment";
 
 @Injectable({
   providedIn: "root"
@@ -13,25 +12,31 @@ export class PlaceService {
   constructor(private http: HttpClient) {}
   getPlaces(): Observable<Place[]> {
     return this.http
-      .get<Place[]>(`${baseURI}/place`)
+      .get<Place[]>(`${environment.baseURL}/place`)
       .pipe(catchError(this.handleError<Place[]>("getPlaces", [])));
   }
 
   editPlaces(place: Place): Observable<void> {
     return this.http
-      .put<void>(`${baseURI}/place/${place.Id}`, place)
+      .put<void>(`${environment.baseURL}/place/${place.Id}`, place, {
+        withCredentials: true
+      })
       .pipe(catchError(this.handleError<void>("editPlaces")));
   }
 
   addPlaces(place: Place): Observable<void> {
     return this.http
-      .post<void>(`${baseURI}/place`, place)
+      .post<void>(`${environment.baseURL}/place`, place, {
+        withCredentials: true
+      })
       .pipe(catchError(this.handleError<void>("addPlaces")));
   }
 
   deletePlaces(place: Place): Observable<void> {
     return this.http
-      .delete<void>(`${baseURI}/place/${place.Id}`)
+      .delete<void>(`${environment.baseURL}/place/${place.Id}`, {
+        withCredentials: true
+      })
       .pipe(catchError(this.handleError<void>("deletePlaces")));
   }
 

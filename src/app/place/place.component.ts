@@ -62,7 +62,7 @@ export class PlaceComponent implements OnInit {
   addPlaces() {
     const dialogRef = this.dialog.open(PlaceDialogComponent, {
       width: "450px",
-      data: new Place()
+      data: {} as Place
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -93,9 +93,10 @@ export class PlaceDialogComponent implements AfterViewInit, OnInit {
     @Inject(MAT_DIALOG_DATA) public data: Place
   ) {
     if (!data.Id) {
-      this.data = new Place();
       this.data.Latitude = 40.157738;
       this.data.Longitude = 116.28788;
+      this.data.PlaceType = {} as PlaceType
+      console.log(this.data)
     }
   }
 
@@ -122,7 +123,7 @@ export class PlaceDialogComponent implements AfterViewInit, OnInit {
       zoom: 17
     });
     this.showPosition();
-    window.qq.maps.event.addListener(this.map, "click", event => {
+    window.qq.maps.event.addListener(this.map, "click", (event:any) => {
       that.data.Longitude = event.latLng.getLng();
       that.data.Latitude = event.latLng.getLat();
       that.showPosition();

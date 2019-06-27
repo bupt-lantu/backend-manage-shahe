@@ -1,5 +1,5 @@
 import { PlaceType } from "../placetype/placetype";
-export class Place {
+export interface Place {
   Id: number;
   Title: string;
   Desc: string;
@@ -8,7 +8,4 @@ export class Place {
   Longitude: number;
   Latitude: number;
   PlaceType: PlaceType;
-  constructor() {
-    this.PlaceType = new PlaceType();
-  }
 }

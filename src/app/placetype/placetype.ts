@@ -1,4 +1,4 @@
-export class PlaceType {
+export interface PlaceType {
   Id: number;
   Type: string;
 }
