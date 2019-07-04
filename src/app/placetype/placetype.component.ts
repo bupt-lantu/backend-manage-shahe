@@ -5,7 +5,7 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA
 } from "@angular/material/dialog";
-import { PlaceTypeService } from "./placetype.service";
+import { PlaceTypeService } from "../placetype.service";
 import { PlaceType } from "./placetype";
 import { DialogComponent } from "../dialog/dialog.component";
 

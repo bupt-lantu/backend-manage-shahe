@@ -1,8 +1,10 @@
 import { CommonModule } from "@angular/common";
+import { ReactiveFormsModule  } from "@angular/forms";
 import { FormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { NgModule } from "@angular/core";
 
+import {MaterialFileInputModule} from "ngx-material-file-input"
 import { MatSelectModule } from "@angular/material/select";
 import { MatTableModule } from "@angular/material/table";
 import { MatDialogModule } from "@angular/material/dialog";
@@ -19,6 +21,7 @@ import { PlaceComponent, PlaceDialogComponent } from "./place.component";
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule.forChild([
       {
         path: "",
@@ -34,6 +37,7 @@ import { PlaceComponent, PlaceDialogComponent } from "./place.component";
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MaterialFileInputModule,
     DialogModule
   ],
   exports: [RouterModule],

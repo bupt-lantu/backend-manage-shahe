@@ -1,12 +1,15 @@
 import { Component, OnInit, AfterViewInit, Inject } from "@angular/core";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { FileValidator } from "ngx-material-file-input";
 import { MatTableDataSource } from "@angular/material/table";
 import {
   MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA
 } from "@angular/material/dialog";
-import { PlaceService } from "./place.service";
-import { PlaceTypeService } from "../placetype/placetype.service";
+import { FileService } from "../file.service";
+import { PlaceService } from "../place.service";
+import { PlaceTypeService } from "../placetype.service";
 import { PlaceType } from "../placetype/placetype";
 import { Place } from "./place";
 import { DialogComponent } from "../dialog/dialog.component";
@@ -87,16 +90,18 @@ export class PlaceComponent implements OnInit {
 export class PlaceDialogComponent implements AfterViewInit, OnInit {
   constructor(
     private placeService: PlaceService,
+    private fileService: FileService,
     private placetypeService: PlaceTypeService,
     public dialog: MatDialog,
+    private fb: FormBuilder,
     public dialogRef: MatDialogRef<PlaceDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Place
   ) {
     if (!data.Id) {
       this.data.Latitude = 40.157738;
       this.data.Longitude = 116.28788;
-      this.data.PlaceType = {} as PlaceType
-      console.log(this.data)
+      this.data.PlaceType = {} as PlaceType;
+      console.log(this.data);
     }
   }
 
@@ -107,10 +112,14 @@ export class PlaceDialogComponent implements AfterViewInit, OnInit {
   ngOnInit() {
     this.placetypeService.getPlaceTypes().subscribe(result => {
       this.placeTypes = result;
-      console.log(this.placeTypes);
+    });
+    this.formDoc = this.fb.group({
+      Picture: [undefined, [FileValidator.maxContentSize(20971520)]],
+      Video: [undefined, [FileValidator.maxContentSize(20971520)]]
     });
   }
 
+  formDoc: FormGroup;
   placeTypes: PlaceType[] = [];
   ngAfterViewInit() {
     const that = this;
@@ -123,7 +132,7 @@ export class PlaceDialogComponent implements AfterViewInit, OnInit {
       zoom: 17
     });
     this.showPosition();
-    window.qq.maps.event.addListener(this.map, "click", (event:any) => {
+    window.qq.maps.event.addListener(this.map, "click", (event: any) => {
       that.data.Longitude = event.latLng.getLng();
       that.data.Latitude = event.latLng.getLat();
       that.showPosition();
@@ -157,7 +166,15 @@ export class PlaceDialogComponent implements AfterViewInit, OnInit {
     });
   }
 
-  onAddClick(place: Place): void {
+  async onAddClick(place: Place) {
+    if(this.formDoc.value.Picture){
+      await this.fileService.upload(this.formDoc.value.Picture.files[0])
+      place.Picture = this.formDoc.value.Picture.files[0].name;
+    }
+    if(this.formDoc.value.Video){
+      await this.fileService.upload(this.formDoc.value.Video.files[0])
+      place.Video = this.formDoc.value.Video.files[0].name;
+    }
     this.placeService.addPlaces(place).subscribe(() => {
       this.dialogRef.close(true);
     });

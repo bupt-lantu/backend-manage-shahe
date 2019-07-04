@@ -4,14 +4,41 @@
     <input matInput type="text" [(ngModel)]="data.Title" placeholder="Title" />
   </mat-form-field>
   <mat-form-field class="full-width">
-    <textarea matInput [(ngModel)]="data.Desc" placeholder="Desc" ></textarea>
+    <textarea matInput [(ngModel)]="data.Desc" placeholder="Desc"></textarea>
   </mat-form-field>
-  <mat-form-field class="full-width">
-    <input matInput [(ngModel)]="data.Picture" placeholder="Picture" />
-  </mat-form-field>
-  <mat-form-field class="full-width">
-    <input matInput [(ngModel)]="data.Video" placeholder="Video" />
-  </mat-form-field>
+  <div [formGroup]="formDoc">
+    <mat-form-field class="full-width">
+      <ngx-mat-file-input
+        formControlName="Picture"
+        placeholder="Picture"
+        accept="image/*"
+      ></ngx-mat-file-input>
+      <mat-icon matSuffix>image</mat-icon>
+      <mat-error *ngIf="formDoc.get('Picture').hasError('maxContentSize')">
+        The total size must not exceed
+        {{formDoc.get('requiredfile')?.getError('maxContentSize').maxSize |
+        byteFormat}}
+        ({{formDoc.get('requiredfile')?.getError('maxContentSize').actualSize |
+        byteFormat}}).
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <ngx-mat-file-input
+        formControlName="Video"
+        placeholder="Video"
+        accept="audio/*"
+      ></ngx-mat-file-input>
+      <mat-icon matSuffix>audiotrack</mat-icon>
+      <mat-error *ngIf="formDoc.get('Video').hasError('maxContentSize')">
+        The total size must not exceed
+        {{formDoc.get('requiredfile')?.getError('maxContentSize').maxSize |
+        byteFormat}}
+        ({{formDoc.get('requiredfile')?.getError('maxContentSize').actualSize |
+        byteFormat}}).
+      </mat-error>
+    </mat-form-field>
+  </div>
+
   <mat-form-field class="full-width">
     <mat-select [(ngModel)]="data.PlaceType.Id" placeholder="PlaceType">
       <mat-option *ngFor="let placetype of placeTypes" [value]="placetype.Id">
@@ -19,7 +46,7 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
- <mat-form-field class="full-width">
+  <mat-form-field class="full-width">
     <input
       matInput
       [(ngModel)]="data.Latitude"

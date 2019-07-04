@@ -4,6 +4,7 @@
 
 export const environment = {
   baseURL:'http://127.0.0.1:8080/v1/',
+  fileURL:'http://10.3.244.81/',
   production: false
 };
 

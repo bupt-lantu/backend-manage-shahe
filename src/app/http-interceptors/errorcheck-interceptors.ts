@@ -22,11 +22,12 @@ export class ErrCheckInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       catchError((err: HttpErrorResponse) => {
+        console.log(err)
         if (err.status === 401) {
           this.authService.isLoggedIn = false;
           this.router.navigate(['/login']);
+          return throwError("没有权限访问!");
         }
-        return throwError("没有权限访问!");
       })
     );
   }
