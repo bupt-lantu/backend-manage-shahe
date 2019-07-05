@@ -14,7 +14,7 @@ export class PlaceTypeService {
   getPlaceTypes(): Observable<PlaceType[]> {
     return this.http
       .get<PlaceType[]>(`${environment.baseURL}/placetype`)
-      .pipe(catchError(this.handleError<PlaceType[]>("getPlaceTypes", [])));
+      .pipe(catchError(this.handleError<PlaceType[]>([])));
   }
 
   editPlaceTypes(placetype: PlaceType): Observable<void> {
@@ -24,7 +24,7 @@ export class PlaceTypeService {
         placetype,
         { withCredentials: true }
       )
-      .pipe(catchError(this.handleError<void>("editPlaceTypes")));
+      .pipe(catchError(this.handleError<void>()));
   }
 
   addPlaceTypes(placetype: PlaceType): Observable<void> {
@@ -32,7 +32,7 @@ export class PlaceTypeService {
       .post<void>(`${environment.baseURL}/placetype`, placetype, {
         withCredentials: true
       })
-      .pipe(catchError(this.handleError<void>("addPlaceTypes")));
+      .pipe(catchError(this.handleError<void>()));
   }
 
   deletePlaceTypes(placetype: PlaceType): Observable<void> {
@@ -40,7 +40,7 @@ export class PlaceTypeService {
       .delete<void>(`${environment.baseURL}/placetype/${placetype.Id}`, {
         withCredentials: true
       })
-      .pipe(catchError(this.handleError<void>("deletePlaceTypes")));
+      .pipe(catchError(this.handleError<void>()));
   }
 
   /**
@@ -49,15 +49,8 @@ export class PlaceTypeService {
    * @param operation - name of the operation that failed
    * @param result - optional value to return as the observable result
    */
-  private handleError<T>(operation = "operation", result?: T) {
-    return (error: any): Observable<T> => {
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
-      // TODO: better job of transforming error for user consumption
-      console.log(`${operation} failed: ${error.message}`);
-
-      // Let the app keep running by returning an empty result.
+  private handleError<T>(result?: T) {
+    return (): Observable<T> => {
       return of(result as T);
     };
   }

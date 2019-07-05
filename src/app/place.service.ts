@@ -13,7 +13,7 @@ export class PlaceService {
   getPlaces(): Observable<Place[]> {
     return this.http
       .get<Place[]>(`${environment.baseURL}/place`)
-      .pipe(catchError(this.handleError<Place[]>("getPlaces", [])));
+      .pipe(catchError(this.handleError<Place[]>([])));
   }
 
   editPlaces(place: Place): Observable<void> {
@@ -21,7 +21,7 @@ export class PlaceService {
       .put<void>(`${environment.baseURL}/place/${place.Id}`, place, {
         withCredentials: true
       })
-      .pipe(catchError(this.handleError<void>("editPlaces")));
+      .pipe(catchError(this.handleError<void>()));
   }
 
   addPlaces(place: Place): Observable<void> {
@@ -29,7 +29,7 @@ export class PlaceService {
       .post<void>(`${environment.baseURL}/place`, place, {
         withCredentials: true
       })
-      .pipe(catchError(this.handleError<void>("addPlaces")));
+      .pipe(catchError(this.handleError<void>()));
   }
 
   deletePlaces(place: Place): Observable<void> {
@@ -37,7 +37,7 @@ export class PlaceService {
       .delete<void>(`${environment.baseURL}/place/${place.Id}`, {
         withCredentials: true
       })
-      .pipe(catchError(this.handleError<void>("deletePlaces")));
+      .pipe(catchError(this.handleError<void>()));
   }
 
   /**
@@ -46,15 +46,8 @@ export class PlaceService {
    * @param operation - name of the operation that failed
    * @param result - optional value to return as the observable result
    */
-  private handleError<T>(operation = "operation", result?: T) {
-    return (error: any): Observable<T> => {
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
-      // TODO: better job of transforming error for user consumption
-      console.log(`${operation} failed: ${error.message}`);
-
-      // Let the app keep running by returning an empty result.
+  private handleError<T>(result?: T) {
+    return (): Observable<T> => {
       return of(result as T);
     };
   }

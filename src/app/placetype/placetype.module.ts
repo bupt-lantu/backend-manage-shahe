@@ -12,10 +12,8 @@ import { MatInputModule } from "@angular/material/input";
 import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
 import { DialogModule } from "../dialog/dialog.module";
-import {
-  PlaceTypeComponent,
-  PlaceTypeDialogComponent
-} from "./placetype.component";
+import { PlaceTypeComponent } from "./main/placetype.component";
+import { PlaceTypeDialogComponent } from "./dialog/placetype.dialog";
 
 @NgModule({
   declarations: [PlaceTypeDialogComponent, PlaceTypeComponent],
@@ -43,5 +41,3 @@ import {
   entryComponents: [PlaceTypeDialogComponent]
 })
 export class PlaceTypeModule {}
-
-

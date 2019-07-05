@@ -3,7 +3,7 @@ import { Observable, of } from "rxjs";
 import { scan, catchError } from "rxjs/operators";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../environments/environment";
-import qs from "querystring";
+import * as qs from "querystring";
 
 @Injectable({
   providedIn: "root"
@@ -40,10 +40,23 @@ export class AuthService {
       );
   }
 
-  checkLogin(): Observable<Object> {
-    return this.http.get(`${environment.baseURL}\login`, {
-      withCredentials: true
-    });
+  checkLogin(): Observable<boolean> {
+    return this.http
+      .get(`${environment.baseURL}\login`, {
+        withCredentials: true
+      })
+      .pipe(
+        scan((login: any) => {
+          if (login.data === "ok") {
+            return true;
+          } else {
+            return false;
+          }
+        }),
+        catchError(() => {
+          return of(false);
+        })
+      );
   }
 
   logout() {

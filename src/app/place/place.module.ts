@@ -14,7 +14,8 @@ import { MatInputModule } from "@angular/material/input";
 import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
 import { DialogModule } from "../dialog/dialog.module";
-import { PlaceComponent, PlaceDialogComponent } from "./place.component";
+import { PlaceComponent } from "./main/place.component";
+import {PlaceDialogComponent} from './dialog/place.dialog'
 
 @NgModule({
   declarations: [PlaceComponent, PlaceDialogComponent],

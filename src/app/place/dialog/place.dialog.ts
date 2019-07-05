@@ -1,86 +1,17 @@
-import { Component, OnInit, AfterViewInit, Inject } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { FileValidator } from "ngx-material-file-input";
-import { MatTableDataSource } from "@angular/material/table";
 import {
   MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA
 } from "@angular/material/dialog";
-import { FileService } from "../file.service";
-import { PlaceService } from "../place.service";
-import { PlaceTypeService } from "../placetype.service";
-import { PlaceType } from "../placetype/placetype";
-import { Place } from "./place";
-import { DialogComponent } from "../dialog/dialog.component";
-
-declare global {
-  interface Window {
-    qq: any;
-  }
-}
-
-@Component({
-  selector: "app-main",
-  templateUrl: "./place.component.html",
-  styleUrls: ["./place.component.sass"]
-})
-export class PlaceComponent implements OnInit {
-  displayedColumns: string[] = [
-    "Id",
-    "Title",
-    "Desc",
-    "Picture",
-    "Video",
-    "Longitude",
-    "Latitude",
-    "PlaceType",
-    "edit"
-  ];
-  dataSource = new MatTableDataSource();
-
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  getPlaces() {
-    this.placeService
-      .getPlaces()
-      .subscribe(places => (this.dataSource = new MatTableDataSource(places)));
-  }
-
-  openDialog(data: Place): void {
-    const dialogRef = this.dialog.open(PlaceDialogComponent, {
-      width: "450px",
-      data: JSON.parse(JSON.stringify(data))
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.getPlaces();
-      }
-    });
-  }
-
-  addPlaces() {
-    const dialogRef = this.dialog.open(PlaceDialogComponent, {
-      width: "450px",
-      data: {} as Place
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.getPlaces();
-      }
-    });
-  }
-
-  constructor(private placeService: PlaceService, public dialog: MatDialog) {}
-
-  ngOnInit() {
-    this.getPlaces();
-  }
-}
+import { PlaceTypeService } from "../../placetype.service";
+import { PlaceType } from "../../placetype/placetype";
+import { DialogComponent } from "../../dialog/dialog.component";
+import { FileService } from "../../file.service";
+import { Component, OnInit, AfterViewInit, Inject } from "@angular/core";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { FileValidator } from "ngx-material-file-input";
+import { PlaceService } from "../../place.service";
+import { Place } from "../place";
 
 @Component({
   selector: "app-place-dialog",
