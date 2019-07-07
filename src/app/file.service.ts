@@ -30,7 +30,10 @@ export class FileService {
       .post<void>(
         `${environment.fileURL}file_admin/api/resources/${file.name}?override=true`,
         file.slice(),
-        { headers: { "X-Auth": this.auth, "Content-Type": "text/html" } }
+        {
+          headers: { "X-Auth": this.auth, "Content-Type": "text/html" },
+          responseType: "text" as "json"
+        }
       )
       .toPromise();
   }

@@ -1,11 +1,10 @@
-import { Component, OnInit} from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { MatTableDataSource } from "@angular/material/table";
-import {
-  MatDialog,
-} from "@angular/material/dialog";
+import { MatDialog } from "@angular/material/dialog";
 import { PlaceService } from "../../place.service";
 import { Place } from "../place";
-import {PlaceDialogComponent} from '../dialog/place.dialog'
+import { PlaceDialogComponent } from "../dialog/place.dialog";
+import {environment} from '../../../environments/environment'
 
 declare global {
   interface Window {
@@ -19,6 +18,7 @@ declare global {
   styleUrls: ["./place.component.sass"]
 })
 export class PlaceComponent implements OnInit {
+  readonly fileURL = environment.fileURL
   displayedColumns: string[] = [
     "Id",
     "Title",
@@ -74,4 +74,3 @@ export class PlaceComponent implements OnInit {
     this.getPlaces();
   }
 }
-

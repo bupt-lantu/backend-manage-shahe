@@ -32,7 +32,6 @@ export class PlaceDialogComponent implements AfterViewInit, OnInit {
       this.data.Latitude = 40.157738;
       this.data.Longitude = 116.28788;
       this.data.PlaceType = {} as PlaceType;
-      console.log(this.data);
     }
   }
 
@@ -89,10 +88,10 @@ export class PlaceDialogComponent implements AfterViewInit, OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.placeService.deletePlaces(place).subscribe(() => {
-          this.dialogRef.close();
+          this.dialogRef.close(true);
         });
       } else {
-        this.dialogRef.close(true);
+        this.dialogRef.close();
       }
     });
   }

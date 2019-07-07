@@ -28,7 +28,10 @@
     <ng-container matColumnDef="Picture">
       <th mat-header-cell *matHeaderCellDef>Picture</th>
       <td mat-cell *matCellDef="let element">
-        <img class="table-image" [src]="element.Picture" />
+        <img
+          class="table-image"
+          [src]="fileURL + '/files/' + element.Picture"
+        />
       </td>
     </ng-container>
 
@@ -36,7 +39,10 @@
       <th mat-header-cell *matHeaderCellDef>Video</th>
       <td mat-cell *matCellDef="let element">
         <audio controls>
-          <source [src]="element.Video" type="audio/mpeg" />
+          <source
+            [src]="fileURL + '/files/' + element.Video"
+            type="audio/mpeg"
+          />
           Your browser does not support the audio element.
         </audio>
       </td>

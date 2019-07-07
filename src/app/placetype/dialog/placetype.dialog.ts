@@ -49,7 +49,7 @@ export class PlaceTypeDialogComponent implements AfterViewInit {
           this.dialogRef.close(true);
         });
       } else {
-        dialogRef.close();
+        this.dialogRef.close();
       }
     });
   }
