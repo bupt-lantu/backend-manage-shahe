@@ -10,7 +10,7 @@ import * as qs from "querystring";
 })
 export class AuthService {
   constructor(private http: HttpClient) {}
-  isLoggedIn = true;
+  isLoggedIn = false;
   redirectUrl: string;
 
   login(username: string, password: string): Observable<boolean> {
