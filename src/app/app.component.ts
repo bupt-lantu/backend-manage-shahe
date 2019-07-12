@@ -1,4 +1,6 @@
 import { Component } from "@angular/core";
+import { AuthService } from "./auth/auth.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-root",
@@ -7,8 +9,14 @@ import { Component } from "@angular/core";
 })
 export class AppComponent {
   title = "backend-management";
-  constructor(){
-    this.loadScript()
+  constructor(private authService: AuthService, private router: Router) {
+    this.loadScript();
+    this.authService.checkLogin().subscribe((login: boolean) => {
+      this.authService.isLoggedIn = login;
+      if (!login) {
+        this.router.navigate(["/login"]);
+      }
+    });
   }
   loadScript() {
     var script = document.createElement("script");
