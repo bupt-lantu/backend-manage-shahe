@@ -29,8 +29,8 @@ export class PlaceDialogComponent implements AfterViewInit, OnInit {
     @Inject(MAT_DIALOG_DATA) public data: Place
   ) {
     if (!data.Id) {
-      this.data.Latitude = 40.157738;
-      this.data.Longitude = 116.28788;
+      this.data.Latitude = 39.961598;
+      this.data.Longitude = 116.358098;
       this.data.PlaceType = {} as PlaceType;
     }
   }
@@ -59,7 +59,7 @@ export class PlaceDialogComponent implements AfterViewInit, OnInit {
         this.data.Latitude,
         this.data.Longitude
       ),
-      zoom: 17
+      zoom: 16
     });
     this.showPosition();
     window.qq.maps.event.addListener(this.map, "click", (event: any) => {
@@ -97,12 +97,12 @@ export class PlaceDialogComponent implements AfterViewInit, OnInit {
   }
 
   async onAddClick(place: Place) {
-    if(this.formDoc.value.Picture){
-      await this.fileService.upload(this.formDoc.value.Picture.files[0])
+    if (this.formDoc.value.Picture) {
+      await this.fileService.upload(this.formDoc.value.Picture.files[0]);
       place.Picture = this.formDoc.value.Picture.files[0].name;
     }
-    if(this.formDoc.value.Video){
-      await this.fileService.upload(this.formDoc.value.Video.files[0])
+    if (this.formDoc.value.Video) {
+      await this.fileService.upload(this.formDoc.value.Video.files[0]);
       place.Video = this.formDoc.value.Video.files[0].name;
     }
     this.placeService.addPlaces(place).subscribe(() => {
