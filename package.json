@@ -29,7 +29,7 @@
     "@nguniversal/express-engine": "^7.1.1",
     "@nguniversal/module-map-ngfactory-loader": "v7.0.2",
     "core-js": "^3.1.4",
-    "express": "^4.15.2",
+    "express": "^4.17.3",
     "ngx-material-file-input": "^1.1.1",
     "rxjs": "~6.5.2",
     "tslib": "^1.10.0",
